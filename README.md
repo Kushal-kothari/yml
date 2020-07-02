@@ -1,3 +1,9 @@
-# erlang-yggdrasil
+yggdrasil
+=====
 
-erlang lib to connect to an yggdrasil network 
+An OTP application
+
+Build
+-----
+
+    $ rebar3 compile
