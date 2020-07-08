@@ -1,5 +1,3 @@
-
-
 %
 % erlang_yggdrasil.erl
 % A yggdrasil server written in erlang which prints back to the user whatever
@@ -38,7 +36,8 @@ start_server(Port,Yggdrasil) ->
       (Check_yggdrasil == [{0,2}]) -> {ok,Parsed_add} = inet:parse_address(Yggdrasil),  
                                        spawn(fun () -> {ok, Listen} =  gen_tcp:listen(Port, [binary,inet6,{packet, raw},{nodelay, true},{reuseaddr, true},{active, once},{ip,Parsed_add}]),
                                        connect(Listen)
-                                        end);
+                                        end),
+                                       io:format("~p Yggdrasil Server Started.~n", [erlang:localtime()]);    
       true -> io:format("Not a Yggdrasil address")
    end. 
 
