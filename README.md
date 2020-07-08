@@ -1,6 +1,7 @@
 # erlang-yggdrasil
 
-A Yggdrasil server built with Erlang.
+
+A Yggdrasil library built in Erlang.
 
 To run, just choose any Port number and your IPv6 Yggdrasil address:
 ```
