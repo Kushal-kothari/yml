@@ -2,12 +2,14 @@
 
 A Yggdrasil server built with Erlang.
 
-To run, just:
+To run, just choose any Port number and your IPv6 Yggdrasil address:
 ```
 1> c(erlang_yggdrasil).
-2> erlang_yggdrasil:start_server(12321,"Your Yggdrasil address").
+2> erlang_yggdrasil:start_server(12321,"Your Yggdrasil address").   
 ```
 
-Before using this you need to have [Yggdrasil](https://yggdrasil-network.github.io/installation.html) and Erlang installed.
+# Requirements
+
+Before using this you need to have [Yggdrasil](https://yggdrasil-network.github.io/installation.html) installed.
 
 
