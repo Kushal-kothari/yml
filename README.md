@@ -14,3 +14,10 @@ To run, just choose any Port number and your IPv6 Yggdrasil address:
 Before using this you need to have [Yggdrasil](https://yggdrasil-network.github.io/installation.html) installed.
 
 
+And check your Yggdrasil address and peers via command : 
+
+```
+$ sudo yggdrasilctl getpeers
+```
+
+
