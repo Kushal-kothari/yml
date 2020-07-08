@@ -1,6 +1,6 @@
+
 # erlang-yggdrasil
 
-# erl_echo
 A Yggdrasil server built with Erlang.
 
 To run, just:
