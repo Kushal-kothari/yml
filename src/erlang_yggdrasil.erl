@@ -52,7 +52,7 @@ start_server(Port,Yggdrasil) ->
 connect(Listen) ->
   {ok, Socket} = gen_tcp:accept(Listen),
   inet:setopts(Socket, [binary,inet6,{packet, raw},{nodelay, true},{reuseaddr, true},{active, once},{ip,{513,27209,16588,50190,56092,13264,47892,37868}}]), %add your own Yggdrasil address
-  spawn_link(erl_echo, connect, [Listen]),
+  spawn_link(erlang_yggdrasil, connect, [Listen]),
 
 
 
@@ -70,8 +70,7 @@ connect(Listen) ->
 
 
 %
-% handle_data/2: handles data incoming from a connection -- checks
-% whether the user wants to close the session
+% handle_data/2: handles data incoming from a connection 
 %
 
 
