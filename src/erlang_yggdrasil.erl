@@ -6,8 +6,10 @@
 %
 
 -module(erlang_yggdrasil).
--export([start_server/2, connect/1, recv_loop/1]).
+-export([start_server/2, connect/2, recv_loop/1]).
 -compile(export_all).
+
+
 
 
 % The message that the users will receive after connecting.
@@ -35,7 +37,7 @@ start_server(Port,Yggdrasil) ->
   if
       (Check_yggdrasil == [{0,2}]) -> {ok,Parsed_add} = inet:parse_address(Yggdrasil),  
                                        spawn(fun () -> {ok, Listen} =  gen_tcp:listen(Port, [binary,inet6,{packet, raw},{nodelay, true},{reuseaddr, true},{active, once},{ip,Parsed_add}]),
-                                       connect(Listen)
+                                       connect(Listen,Parsed_add)
                                         end),
                                        io:format("~p Yggdrasil Server Started.~n", [erlang:localtime()]);    
       true -> io:format("Not a Yggdrasil address")
@@ -45,14 +47,10 @@ start_server(Port,Yggdrasil) ->
 
 
 
-% A small issue which would be corrected soon,You need to manually add your parsed yggdrasil address in the place of given IP address
-%todo: fix the issue of manually adding again the Yggdrasil address
-
-
-connect(Listen) ->
+connect(Listen,Parsed_add) ->
   {ok, Socket} = gen_tcp:accept(Listen),
-  inet:setopts(Socket, [binary,inet6,{packet, raw},{nodelay, true},{reuseaddr, true},{active, once},{ip,{513,27209,16588,50190,56092,13264,47892,37868}}]), %add your own Yggdrasil address
-  spawn_link(erlang_yggdrasil, connect, [Listen]),
+  inet:setopts(Socket, [binary,inet6,{packet, raw},{nodelay, true},{reuseaddr, true},{active, once},{ip,Parsed_add}]), %add your own Yggdrasil address
+  spawn_link(erlang_yggdrasil, connect, [Listen,Parsed_add]),
 
 
 
@@ -108,5 +106,7 @@ recv_loop(Socket) ->
     {tcp_closed, Socket} ->
       io:format("~p Client Disconnected.~n", [erlang:localtime()])
   end.
+
+
 
 
