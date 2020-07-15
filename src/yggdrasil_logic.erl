@@ -36,16 +36,16 @@ yggdrasil_connect(Port,Yggdrasil) ->
 
 connect(Listen,Parsed_add) ->
   {ok, Socket} = gen_tcp:accept(Listen),
-  inet:setopts(Socket, [binary,inet6,{packet, raw},{nodelay, true},{reuseaddr, true},{active, once},{ip,Parsed_add}]), %add your own Yggdrasil address
+  inet:setopts(Socket, [binary,inet6,{packet, raw},{nodelay, true},{reuseaddr, true},{active, once},{ip,Parsed_add}]), 
   spawn_link(yggdrasil_logic, connect, [Listen,Parsed_add]),
   gen_tcp:send(Socket, ?WELCOME_MESSAGE),
   gen_tcp:send(Socket, ?LINE_PREFIX),
   recv_loop(Socket),
   gen_tcp:close(Socket).
 
-%
-% handle_data/2: handles data incoming from a connection 
-%
+
+%%handle_data/2: handles data incoming from a connection 
+
 
 handle_data(Socket, Data) ->
   io:format("~p ~p ~p~n", [inet:peername(Socket), erlang:localtime(), Data]),
@@ -65,7 +65,7 @@ handle_data(Socket, Data) ->
   end.
 
 
-% recv_loop/1: handles a connection's event loop
+%% recv_loop/1: handles a connection's event loop
 
 recv_loop(Socket) ->
   inet:setopts(Socket, [{active, once}]),
