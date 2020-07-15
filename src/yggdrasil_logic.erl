@@ -29,7 +29,7 @@ yggdrasil_connect(Port,Yggdrasil) ->
                        connect(Listen,Parsed_add)
                        end),
                        ?LOG_INFO("~p Yggdrasil Server Started.~n", [erlang:localtime()]);
-    {match,_Rest} -> ?LOG_ERROR("Not a Yggdrasil address");                      
+    {match,_Rest} -> ?LOG_ERROR("Not a Yggdrasil address");                     
     nomatch -> ?LOG_ERROR("cannot establish connection : Check your Yggdrasil Address or if Port blocked by firewall")
    end. 
 
