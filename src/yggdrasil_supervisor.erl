@@ -12,8 +12,8 @@ start_link() ->
 init([]) ->
     ?LOG_INFO("~p (~p) starting . . . ~n", [{global, ?MODULE}, self()]),
     
-%%% if maxrestarts restarts occurs in maxsecondsrestarts seconds    
-%%% supervisor and child process are killed
+%% @doc if maxrestarts restarts occurs in maxsecondsrestarts seconds    
+%% @doc supervisor and child process are killed
    
     RestartStrategy = one_for_one,
     MaxRestarts = 3,

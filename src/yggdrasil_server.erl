@@ -1,6 +1,6 @@
 -module(yggdrasil_server).
 
--behaviour(gen_server).  %% we want to declare a behaviour which is gen server.
+-behaviour(gen_server).  
 
 %% API
 -export([ stop/0, start_link/0,yggdrasil_connect/2]). %what client can see

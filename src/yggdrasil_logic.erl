@@ -13,12 +13,11 @@
 
 
 
-% The message that the users will receive after connecting.
+%% @doc The message that the users will receive after connecting.
 -define(WELCOME_MESSAGE, [
   "\x1b[32mWelcome! This is a Yggdrasil server developed under Barrel Db Labs..\x1b[0m.\r\n"]).
 
-
-% What to prefix the users' input lines with.
+%% @doc What to prefix the users' input lines with.
 -define(LINE_PREFIX, "> ").
 
 
@@ -44,7 +43,7 @@ connect(Listen,Parsed_add) ->
   gen_tcp:close(Socket).
 
 
-%%handle_data/2: handles data incoming from a connection 
+%% @doc handle_data/2: handles data incoming from a connection 
 
 
 handle_data(Socket, Data) ->
@@ -65,7 +64,7 @@ handle_data(Socket, Data) ->
   end.
 
 
-%% recv_loop/1: handles a connection's event loop
+%% @doc recv_loop/1: handles a connection's event loop
 
 recv_loop(Socket) ->
   inet:setopts(Socket, [{active, once}]),

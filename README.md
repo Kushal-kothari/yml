@@ -3,11 +3,7 @@
 
 A Yggdrasil library built in Erlang.
 
-To run: first compile and then
-```
-1> yggdrasil_system:start().
-2> yggdrasil_client:yggdrasil_connect(12321,"Your Yggdrasil address").   
-```
+
 
 # Requirements
 
@@ -27,7 +23,12 @@ erlang_yggdrasil.erl:10: Warning: export_all flag enabled - all functions will b
 ok
 2>yggdrasil_client:yggdrasil_connect(12321,"203:18f0:c3bb:cd12:66d2:bb08:ce8d:9fde").
 ok
-3>yggdrasil_system:stop().                                                          
+3>yggdrasil_system:stop().   
+    application: yggdrasil_system
+    exited: stopped
+    type: temporary
+
+ok                                                       
   
 ```
 
@@ -44,3 +45,5 @@ Connection closed by foreign host.
 
 
 ```
+
+This project is currently in its initial stages with basic functionalities .More features are indeed going to be added :)
