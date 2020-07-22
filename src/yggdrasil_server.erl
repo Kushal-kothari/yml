@@ -1,22 +1,24 @@
 -module(yggdrasil_server).
-
 -behaviour(gen_server).  
 
 %% API
--export([ stop/0, start_link/0,yggdrasil_connect/2]). %what client can see
+-export([ stop/0, start_link/0,yggdrasil_connect/0]). %what client can see
 
 %%GEN SERVER
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
 -include_lib("kernel/include/logger.hrl").
 
-% %%%%%%%%%%%%%%%%% CLIENT CALL %%%%%%%%%%%%%%%%%
 
-yggdrasil_connect(Port, Yggdrasil) ->
-    gen_server:call({global, ?MODULE}, {yggdrasil_connect,Port, Yggdrasil}).
+%%%%%%%%%%%%%%%% CLIENT CALL %%%%%%%%%%%%%%%%%
+
+
+yggdrasil_connect() ->
+    gen_server:call({global, ?MODULE}, {yggdrasil_connect}).
 
 
 stop() ->
     gen_server:call({global, ?MODULE}, stop).
+
 
 start_link() ->
     gen_server:start_link({global, ?MODULE},?MODULE,[],[]).
@@ -33,8 +35,9 @@ init(_Args) ->
     {ok, []}.
 
 
-handle_call({yggdrasil_connect,Port, Yggdrasil}, _From, State) -> 
-     {reply, yggdrasil_logic:yggdrasil_connect(Port, Yggdrasil), State};
+handle_call({yggdrasil_connect}, _From, State) -> 
+     {reply, yggdrasil_logic:yggdrasil_connect(), State};
+
 
 handle_call(_Request, _From, State) ->                                        
     {reply, ok, State}.
@@ -43,11 +46,14 @@ handle_call(_Request, _From, State) ->
 handle_cast(_Msg, State) -> 
     {noreply, State}.
 
+
 handle_info(_Info, State) -> 
     {noreply, State}.
 
+
 terminate(_Reason, _State) -> 
     ok.
+
 
 code_change(_OldVsn, State, _Extra) ->
     {ok, State}.

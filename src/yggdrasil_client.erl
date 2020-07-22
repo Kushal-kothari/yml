@@ -1,9 +1,8 @@
 -module(yggdrasil_client).
 
--export([yggdrasil_connect/2]).
+-export([yggdrasil_connect/0]).
 
-yggdrasil_connect(Port, Yggdrasil) ->
-    yggdrasil_server:yggdrasil_connect(Port, Yggdrasil).
-
+yggdrasil_connect() ->
+    yggdrasil_server:yggdrasil_connect().
 
 

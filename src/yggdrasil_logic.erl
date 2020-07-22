@@ -1,33 +1,34 @@
-%
-% erlang_yggdrasil.erl
-% A yggdrasil server written in erlang which prints back to the user whatever
-% they sent. Whenever the user may want to exit, he/she has the
-% possibility of closing the connection by typing "exit".
-% yggdrasil_system:start().
-% yggdrasil_client:yggdrasil_connect(12321,"203:18f0:c3bb:cd12:66d2:bb08:ce8d:9fde").
+%%% -*- erlang -*-
+%%% erlang_yggdrasil.erl
+%%% A yggdrasil server written in erlang which prints back to the user whatever
+%%% they sent. Whenever the user may want to exit, he/she has the
+%%% possibility of closing the connection by typing "exit".
+%%% See the README for more information.
 
 -module(yggdrasil_logic).
--export([yggdrasil_connect/2, connect/2, recv_loop/1]).
--compile(export_all).
+-export([yggdrasil_connect/0, connect/2, recv_loop/1]).
 -include_lib("kernel/include/logger.hrl").
-
 
 
 %% @doc The message that the users will receive after connecting.
 -define(WELCOME_MESSAGE, [
-  "\x1b[32mWelcome! This is a Yggdrasil server developed under Barrel Db Labs..\x1b[0m.\r\n"]).
+  "\x1b[32mWelcome! This is a Erlang Yggdrasil server developed under Barrel Db Labs..\x1b[0m.\r\n"]).
+
 
 %% @doc What to prefix the users' input lines with.
 -define(LINE_PREFIX, "> ").
 
 
-yggdrasil_connect(Port,Yggdrasil) ->
+yggdrasil_connect() ->
+  {ok, Port} = application:get_env(port),
+  {ok, Yggdrasil} = application:get_env(yggdrasil),
+  io:format("listening on port ~w~n", [Port]),
   case re:run(Yggdrasil,"20") of
     {match,[{0,2}]} -> {ok,Parsed_add} = inet:parse_address(Yggdrasil),  
                        spawn(fun () -> {ok, Listen} =  gen_tcp:listen(Port, [binary,inet6,{packet, raw},{nodelay, true},{reuseaddr, true},{active, once},{ip,Parsed_add}]),
                        connect(Listen,Parsed_add)
                        end),
-                       ?LOG_INFO("~p Yggdrasil Server Started.~n", [erlang:localtime()]);
+                       io:format("~p Yggdrasil Server Started.~n", [erlang:localtime()]);
     {match,_Rest} -> ?LOG_ERROR("Not a Yggdrasil address");                     
     nomatch -> ?LOG_ERROR("cannot establish connection : Check your Yggdrasil Address or if Port blocked by firewall")
    end. 
@@ -66,16 +67,12 @@ handle_data(Socket, Data) ->
 
 %% @doc recv_loop/1: handles a connection's event loop
 
+
 recv_loop(Socket) ->
   inet:setopts(Socket, [{active, once}]),
   receive
     {tcp, Socket, Data} ->
       handle_data(Socket, Data);
     {tcp_closed, Socket} ->
-       ?LOG_INFO("~p Client Disconnected.~n", [erlang:localtime()])
+       io:format("~p Client Disconnected.~n", [erlang:localtime()])
   end.
-
-
-
-
-

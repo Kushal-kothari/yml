@@ -7,7 +7,6 @@
 start() ->
     application:start(?MODULE).
 
-
 start(_Type, _Args) ->
     yggdrasil_supervisor:start_link().
 

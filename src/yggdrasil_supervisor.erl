@@ -18,7 +18,7 @@ init([]) ->
     RestartStrategy = one_for_one,
     MaxRestarts = 3,
     MaxSecondsBetweenRestarts = 5,
-    Flags = {RestartStrategy,MaxRestarts, MaxSecondsBetweenRestarts}, % one_for_one | one_for_all | rest_for_one | simple_one_for_one
+    Flags = {RestartStrategy,MaxRestarts, MaxSecondsBetweenRestarts}, 
 
     Restart = permanent,
     Shutdown = infinity,
@@ -26,5 +26,3 @@ init([]) ->
     ChildSpecifications = {yggdrasilServerId, {yggdrasil_server, start_link,[]}, Restart, Shutdown, Type, [yggdrasil_server]},
 
     {ok, {Flags, [ChildSpecifications]}}.
-
-    
